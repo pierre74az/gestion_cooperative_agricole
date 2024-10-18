@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Supprimer le Suivi de Production - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Supprimer le Suivi de Production</h2>
+<p>Êtes-vous sûr de vouloir supprimer ce suivi de production ? Cette action est irréversible.</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirmer la Suppression</button>
+    <a href="{% url 'production_detail' production.pk %}" class="btn btn-secondary">Annuler</a>
+</form>
+{% endblock %}

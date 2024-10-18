@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Résultats du Quiz - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Résultats du Quiz : {{ quiz.title }}</h2>
+<p><strong>Score :</strong> {{ score }}%</p>
+<p><strong>Réponses Correctes :</strong> {{ correct_answers }} sur {{ total_questions }}</p>
+
+{% if score >= 70 %}
+    <p>Félicitations ! Vous avez réussi le quiz.</p>
+{% else %}
+    <p>Votre score est insuffisant. Veuillez réessayer le quiz.</p>
+    <a href="{% url 'start_formation' formation.id %}" class="btn btn-primary">Réessayer le Quiz</a>
+{% endif %}
+
+<a href="{% url 'formation_detail' formation.id %}" class="btn btn-secondary mt-3">Retour aux Détails de la Formation</a>
+{% endblock %}

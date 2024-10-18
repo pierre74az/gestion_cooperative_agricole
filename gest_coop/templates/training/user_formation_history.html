@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Historique des Formations - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Historique des Formations</h2>
+{% if user_formations %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Formation</th>
+                <th>Statut</th>
+                <th>Date de Début</th>
+                <th>Date de Complétion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for uf in user_formations %}
+            <tr>
+                <td>{{ uf.formation.title }}</td>
+                <td>
+                    {% if uf.completed %}
+                        <span class="badge bg-success">Complétée</span>
+                    {% else %}
+                        <span class="badge bg-warning">En Cours</span>
+                    {% endif %}
+                </td>
+                <td>{{ uf.started_at|date:"d/m/Y H:i" }}</td>
+                <td>
+                    {% if uf.completed_at %}
+                        {{ uf.completed_at|date:"d/m/Y H:i" }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Vous n'avez pas encore suivi de formations.</p>
+{% endif %}
+{% endblock %}

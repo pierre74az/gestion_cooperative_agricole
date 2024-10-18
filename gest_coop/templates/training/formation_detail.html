@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Détails de la Formation - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>{{ formation.title }}</h2>
+<p>{{ formation.description }}</p>
+
+{% if formation.pdf %}
+    <h4>Document PDF</h4>
+    <a href="{{ formation.pdf.url }}" target="_blank" class="btn btn-secondary">Télécharger le PDF</a>
+{% endif %}
+
+{% if formation.video %}
+    <h4>Vidéo de la Formation</h4>
+    <video width="100%" height="400" controls>
+        <source src="{{ formation.video.url }}" type="video/mp4">
+        Votre navigateur ne supporte pas la lecture de vidéos.
+    </video>
+{% endif %}
+
+{% if user_has_formation %}
+    {% if not user_formation.completed %}
+        <a href="{% url 'start_formation' formation.id %}" class="btn btn-primary mt-3">Commencer la Formation</a>
+    {% else %}
+        <span class="badge bg-success mt-3">Formation Complétée</span>
+    {% endif %}
+{% else %}
+    <a href="{% url 'enroll_formation' formation.id %}" class="btn btn-success mt-3">S'inscrire à la Formation</a>
+{% endif %}
+
+{% endblock %}

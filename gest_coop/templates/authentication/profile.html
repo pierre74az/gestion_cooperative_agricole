@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Mon Profil - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Mon Profil</h2>
+<form method="post">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend>Informations Personnelles</legend>
+        {{ user_form|crispy }}
+    </fieldset>
+    {% if profile_form %}
+    <fieldset class="form-group">
+        <legend>Profil Agriculteur</legend>
+        {{ profile_form|crispy }}
+    </fieldset>
+    {% endif %}
+    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+</form>
+{% endblock %}

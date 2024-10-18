@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Inscription - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Inscription</h2>
+<p>Choisissez votre type d'utilisateur :</p>
+<a href="{% url 'buyer_signup' %}" class="btn btn-primary">Acheteur</a>
+<a href="{% url 'farmer_signup' %}" class="btn btn-secondary">Agriculteur</a>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Membres - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Membres de la Coopérative</h2>
+{% if user.is_staff %}
+    <a href="{% url 'member_create' %}" class="btn btn-primary mb-3">Ajouter un Membre</a>
+{% endif %}
+<div class="row">
+    {% for member in members %}
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            {% if member.photo %}
+                <img src="{{ member.photo.url }}" class="card-img-top" alt="{{ member.name }}">
+            {% else %}
+                <img src="{% static 'images/default_member.png' %}" class="card-img-top" alt="Membre par défaut">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ member.name }}</h5>
+                <p class="card-text">{{ member.get_role_display }}</p>
+                <a href="{% url 'member_detail' member.pk %}" class="btn btn-info">Voir Détails</a>
+                {% if user.is_staff %}
+                    <a href="{% url 'member_update' member.pk %}" class="btn btn-warning">Modifier</a>
+                    <a href="{% url 'member_delete' member.pk %}" class="btn btn-danger">Supprimer</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>Aucun membre trouvé.</p>
+    {% endfor %}
+</div>
+{% endblock %}

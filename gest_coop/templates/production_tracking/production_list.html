@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Mes Suivis de Production - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Mes Suivis de Production</h2>
+<a href="{% url 'production_create' %}" class="btn btn-primary mb-3">Ajouter un Suivi de Production</a>
+{% if production_tracks %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Culture</th>
+                <th>Région</th>
+                <th>Province</th>
+                <th>Date de Récolte</th>
+                <th>Quantité d'Engrais (kg)</th>
+                <th>Date de Mise d'Engrais</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for production in production_tracks %}
+            <tr>
+                <td>{{ production.get_type_culture_display }}</td>
+                <td>{{ production.region }}</td>
+                <td>{{ production.province }}</td>
+                <td>
+                    {% if production.date_recolte %}
+                        {{ production.date_recolte|date:"d/m/Y" }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if production.quantite_engrais %}
+                        {{ production.quantite_engrais }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if production.date_mise_engrais %}
+                        {{ production.date_mise_engrais|date:"d/m/Y" }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'production_detail' production.pk %}" class="btn btn-sm btn-info">Voir</a>
+                    <a href="{% url 'production_update' production.pk %}" class="btn btn-sm btn-warning">Modifier</a>
+                    <a href="{% url 'production_delete' production.pk %}" class="btn btn-sm btn-danger">Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Aucun suivi de production trouvé. Cliquez sur "Ajouter un Suivi de Production" pour en créer un.</p>
+{% endif %}
+{% endblock %}

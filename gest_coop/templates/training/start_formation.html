@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Commencer la Formation - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Quiz : {{ quiz.title }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Soumettre les Réponses</button>
+</form>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Accueil - GestCoop
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Bienvenue sur GestCoop</h1>
+    <p class="lead">Votre plateforme de gestion coopérative agricole.</p>
+    <hr class="my-4">
+    <p>Découvrez nos produits, formations et bien plus encore.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'about' %}" role="button">En savoir plus</a>
+</div>
+{% endblock %}

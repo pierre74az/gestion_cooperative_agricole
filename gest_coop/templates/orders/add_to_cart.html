@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Ajouter au Panier - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Ajouter {{ product.name }} au Panier</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Ajouter au Panier</button>
+    <a href="{% url 'product_list' %}" class="btn btn-secondary">Retour aux Produits</a>
+</form>
+{% endblock %}

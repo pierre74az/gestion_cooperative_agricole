@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Détails du Membre - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>{{ member.name }}</h2>
+<div class="row">
+    <div class="col-md-4">
+        {% if member.photo %}
+            <img src="{{ member.photo.url }}" class="img-fluid" alt="{{ member.name }}">
+        {% else %}
+            <img src="{% static 'images/default_member.png' %}" class="img-fluid" alt="Membre par défaut">
+        {% endif %}
+    </div>
+    <div class="col-md-8">
+        <p><strong>Rôle :</strong> {{ member.get_role_display }}</p>
+        <p><strong>Email :</strong> {{ member.email }}</p>
+        <p><strong>Téléphone :</strong> {{ member.phone|default:"-" }}</p>
+        <p><strong>Bio :</strong> {{ member.bio|default:"Aucune biographie disponible." }}</p>
+        {% if user.is_staff %}
+            <a href="{% url 'member_update' member.pk %}" class="btn btn-warning">Modifier</a>
+            <a href="{% url 'member_delete' member.pk %}" class="btn btn-danger">Supprimer</a>
+        {% endif %}
+        <a href="{% url 'member_list' %}" class="btn btn-secondary">Retour à la Liste</a>
+    </div>
+</div>
+{% endblock %}

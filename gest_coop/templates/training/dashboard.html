@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Tableau de Bord des Formations - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Tableau de Bord des Formations</h2>
+
+<h3>Formations Disponibles</h3>
+<div class="row">
+    {% for formation in formations %}
+    <div class="col-md-6">
+        <div class="card mb-4 shadow-sm">
+            {% if formation.video %}
+                <video width="100%" height="200" controls>
+                    <source src="{{ formation.video.url }}" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                </video>
+            {% elif formation.pdf %}
+                <img src="{% static 'images/pdf_icon.png' %}" class="card-img-top" alt="PDF Formation">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ formation.title }}</h5>
+                <p class="card-text">{{ formation.description|truncatewords:30 }}</p>
+                <a href="{% url 'formation_detail' formation.id %}" class="btn btn-primary">Voir Détails</a>
+                {% if formation.id in user_formation_ids %}  {# Vérifiez contre l'ensemble plutôt #}
+                    <span class="badge bg-success">Inscrit</span>
+                {% else %}
+                    <a href="{% url 'enroll_formation' formation.id %}" class="btn btn-success">S'inscrire</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>Aucune formation disponible pour le moment.</p>
+    {% endfor %}
+</div>
+
+
+<h3>Historique des Formations</h3>
+{% if user_formations %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Formation</th>
+                <th>Statut</th>
+                <th>Date de Début</th>
+                <th>Date de Complétion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for uf in user_formations %}
+            <tr>
+                <td>{{ uf.formation.title }}</td>
+                <td>
+                    {% if uf.completed %}
+                        <span class="badge bg-success">Complétée</span>
+                    {% else %}
+                        <span class="badge bg-warning">En Cours</span>
+                    {% endif %}
+                </td>
+                <td>{{ uf.started_at|date:"d/m/Y H:i" }}</td>
+                <td>
+                    {% if uf.completed_at %}
+                        {{ uf.completed_at|date:"d/m/Y H:i" }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Vous n'avez pas encore suivi de formations.</p>
+{% endif %}
+{% endblock %}

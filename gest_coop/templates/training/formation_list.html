@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Formations - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Formations Disponibles</h2>
+<div class="row">
+    {% for formation in formations %}
+    <div class="col-md-6">
+        <div class="card mb-4 shadow-sm">
+            {% if formation.video %}
+                <video width="100%" height="200" controls>
+                    <source src="{{ formation.video.url }}" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                </video>
+            {% elif formation.pdf %}
+                <img src="{% static 'images/pdf_icon.png' %}" class="card-img-top" alt="PDF Formation">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ formation.title }}</h5>
+                <p class="card-text">{{ formation.description|truncatewords:30 }}</p>
+                <a href="{% url 'formation_detail' formation.id %}" class="btn btn-primary">Voir Détails</a>
+                {% if formation.id in user_formations %}
+                    <span class="badge bg-success">Inscrit</span>
+                {% else %}
+                    <a href="{% url 'enroll_formation' formation.id %}" class="btn btn-success">S'inscrire</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>Aucune formation disponible pour le moment.</p>
+    {% endfor %}
+</div>
+{% endblock %}

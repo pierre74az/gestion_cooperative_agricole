@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Modifier le Panier - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Modifier {{ cart_item.product.name }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Mettre à Jour</button>
+    <a href="{% url 'view_cart' %}" class="btn btn-secondary">Retour au Panier</a>
+</form>
+{% endblock %}

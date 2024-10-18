@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{% if production %}
+    Modifier le Suivi de Production - GestCoop
+{% else %}
+    Ajouter un Suivi de Production - GestCoop
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h2>
+    {% if production %}
+        Modifier le Suivi de Production
+    {% else %}
+        Ajouter un Suivi de Production
+    {% endif %}
+</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+    <a href="{% url 'production_list' %}" class="btn btn-secondary">Annuler</a>
+</form>
+{% endblock %}

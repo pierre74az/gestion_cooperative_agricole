@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{% if member %}
+    Modifier le Membre - GestCoop
+{% else %}
+    Ajouter un Membre - GestCoop
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h2>
+    {% if member %}
+        Modifier le Membre
+    {% else %}
+        Ajouter un Membre
+    {% endif %}
+</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+    <a href="{% url 'member_list' %}" class="btn btn-secondary">Annuler</a>
+</form>
+{% endblock %}

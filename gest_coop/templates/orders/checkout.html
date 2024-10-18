@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Passer à la Caisse - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Passer à la Caisse</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Produit</th>
+            <th>Prix Unitaire (€)</th>
+            <th>Quantité</th>
+            <th>Sous-Total (€)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.product.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h4>Total : {{ total }} €</h4>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Confirmer le Paiement</button>
+    <a href="{% url 'view_cart' %}" class="btn btn-secondary">Retour au Panier</a>
+</form>
+
+<!-- Intégration de Stripe.js -->
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}

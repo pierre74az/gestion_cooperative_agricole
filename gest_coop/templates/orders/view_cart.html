@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Mon Panier - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Mon Panier</h2>
+{% if cart_items %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Image</th>
+                <th>Prix Unitaire (€)</th>
+                <th>Quantité</th>
+                <th>Sous-Total (€)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td><img src="{{ item.product.photo.url }}" alt="{{ item.product.name }}" width="50"></td>
+                <td>{{ item.product.price }}</td>des 
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.subtotal }}</td>
+                <td>
+                    <a href="{% url 'update_cart_item' item.id %}" class="btn btn-sm btn-warning">Modifier</a>
+                    <a href="{% url 'remove_cart_item' item.id %}" class="btn btn-sm btn-danger">Retirer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h4>Total : {{ total }} €</h4>
+    <a href="{% url 'checkout' %}" class="btn btn-primary">Passer à la Caisse</a>
+{% else %}
+    <p>Votre panier est vide. <a href="{% url 'product_list' %}">Commencez vos achats</a>.</p>
+{% endif %}
+{% endblock %}

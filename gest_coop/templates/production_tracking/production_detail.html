@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Détails du Suivi de Production - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Détails du Suivi de Production</h2>
+<table class="table">
+    <tr>
+        <th>Culture</th>
+        <td>{{ production.get_type_culture_display }}</td>
+    </tr>
+    <tr>
+        <th>Région</th>
+        <td>{{ production.region }}</td>
+    </tr>
+    <tr>
+        <th>Province</th>
+        <td>{{ production.province }}</td>
+    </tr>
+    <tr>
+        <th>Date Prévue de Semis</th>
+        <td>
+            {% if production.date_prevue_semer %}
+                {{ production.date_prevue_semer|date:"d/m/Y" }}
+            {% else %}
+                -
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Date de Mise d'Engrais</th>
+        <td>
+            {% if production.date_mise_engrais %}
+                {{ production.date_mise_engrais|date:"d/m/Y" }}
+            {% else %}
+                -
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Quantité d'Engrais (kg)</th>
+        <td>
+            {% if production.quantite_engrais %}
+                {{ production.quantite_engrais }}
+            {% else %}
+                -
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Date de Récolte</th>
+        <td>
+            {% if production.date_recolte %}
+                {{ production.date_recolte|date:"d/m/Y" }}
+            {% else %}
+                -
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Notes</th>
+        <td>
+            {% if production.notes %}
+                {{ production.notes }}
+            {% else %}
+                -
+            {% endif %}
+        </td>
+    </tr>
+</table>
+<a href="{% url 'production_update' production.pk %}" class="btn btn-warning">Modifier</a>
+<a href="{% url 'production_delete' production.pk %}" class="btn btn-danger">Supprimer</a>
+<a href="{% url 'production_list' %}" class="btn btn-secondary">Retour à la Liste</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Paiement Réussi - GestCoop
+{% endblock %}
+
+{% block content %}
+<h2>Paiement Réussi</h2>
+<p>Votre paiement a été effectué avec succès ! Un reçu a été généré et ajouté à votre historique de commandes.</p>
+<a href="{% url 'order_history' %}" class="btn btn-primary">Voir l'Historique des Commandes</a>
+{% endblock %}
